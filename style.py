@@ -32,6 +32,29 @@ section[data-testid="stSidebar"] .stMarkdown h3 {
     color: #5eead4;
 }
 
+/* ---- Sidebar text & nav links: fix dim/gray look ---- */
+section[data-testid="stSidebar"] .stMarkdown p,
+section[data-testid="stSidebar"] .stMarkdown span,
+section[data-testid="stSidebar"] .stMarkdown li {
+    color: #e6ecf5 !important;
+    opacity: 1 !important;
+}
+
+section[data-testid="stSidebarNav"] a {
+    color: #c7d2fe !important;
+    opacity: 1 !important;
+    font-weight: 500;
+}
+
+section[data-testid="stSidebarNav"] a:hover {
+    color: #5eead4 !important;
+}
+
+section[data-testid="stSidebarNav"] a[aria-current="page"] {
+    color: #5eead4 !important;
+    font-weight: 700;
+}
+
 /* ---- Headings ---- */
 h1 {
     background: linear-gradient(90deg, #5eead4, #818cf8, #f472b6);
