@@ -1,5 +1,6 @@
 import streamlit as st
 from style import inject_custom_css, hero_banner
+from gene_info import GENE_DISEASE_INFO
 
 st.set_page_config(page_title="Prevention Guide | GenoLineage", page_icon="🛡️", layout="wide")
 inject_custom_css()
@@ -12,6 +13,32 @@ hero_banner("Prevention Pathways", "Once a mutation and inheritance risk are ide
 
 st.warning("⚠️ This page is for academic/informational purposes only. It is not medical advice — always consult a certified genetic counselor or physician.")
 
+# ---------------- Disease-specific recommendation block ----------------
+detected_gene = st.session_state.get("detected_gene")
+detected_mutations = st.session_state.get("detected_mutations")
+
+if detected_gene and detected_mutations:
+    info = GENE_DISEASE_INFO[detected_gene]
+    st.markdown(
+        f"""
+        <div class="hero-banner" style="margin-top:10px;">
+            <h3 style="margin-bottom:6px;">🧬 Based on your result: {detected_gene} — {info['disease']}</h3>
+            <p style="color:#94a3b8;">{len(detected_mutations)} mutation(s) detected in this gene.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown("#### Specific recommendations")
+    for point in info["advice"]:
+        st.markdown(f"- {point}")
+    st.markdown("---")
+    st.markdown("#### General pathways (still applicable)")
+elif detected_mutations is not None:
+    st.info("No specific gene match found for detected mutations — showing general prevention pathways below.")
+else:
+    st.info("Run **Mutation Detection** first to see disease-specific recommendations here. General pathways are shown below.")
+
+# ---------------- General pathways (existing content) ----------------
 col1, col2, col3 = st.columns(3)
 
 with col1:

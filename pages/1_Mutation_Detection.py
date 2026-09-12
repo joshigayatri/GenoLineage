@@ -2,6 +2,7 @@ import streamlit as st
 from style import inject_custom_css, hero_banner, stat_card_row
 from alignment import needleman_wunsch, smith_waterman, find_mutation_positions
 from data_utils import read_fasta, generate_mutated_sequence
+from gene_info import detect_gene_from_header
 
 st.set_page_config(page_title="Mutation Detection | GenoLineage", page_icon="🧫", layout="wide")
 inject_custom_css()
@@ -92,6 +93,10 @@ if run:
     elapsed = time.perf_counter() - start
 
     detected = find_mutation_positions(aligned_ref, aligned_patient)
+
+    detected_gene = detect_gene_from_header(header)
+    st.session_state["detected_mutations"] = detected
+    st.session_state["detected_gene"] = detected_gene
 
     st.markdown("## 3. Results")
 
